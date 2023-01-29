@@ -1,0 +1,31 @@
+version: '3'
+services:
+    mysqldb_devel:
+            image: mysql:${MYSQL_VERSION}
+            container_name: ${MYSQL_CONTAINER}
+            restart: always
+            env_file:
+                - ".dbenv"
+            environment:
+                - MYSQL_DATABASE=${MYSQL_DATABASE}
+                - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                - MYSQL_USER=${MYSQL_USER}
+                - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            ports:
+                - "3306:3306"
+            command: 
+              - --sort_buffer_size=1073741824
+            volumes:
+                - "./data/mysql:/var/lib/mysql"
+    ijdcs:
+            #image: ijdcs-php:1.0
+            build: .
+            container_name: backend
+            restart: always
+            ports:
+                - "8000:8000"
+            environment:
+                PUID: 6666
+                PGID: 6666
+            volumes:
+                - "./data/storage:/usr/src/storage"
