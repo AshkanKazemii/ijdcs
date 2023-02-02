@@ -15,7 +15,8 @@ class SubmissionArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return (Auth::user()->permit) ? true : false;
+        // return (Auth::user()->permit) ? true : false;
+        return true ;
     }
 
     /**
